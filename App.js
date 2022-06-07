@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import {View, StyleSheet,Button,Text,TextInput} from 'react-native';
 import Header from "./components/Header";
 import Debt from "./components/Debt";
@@ -6,7 +6,6 @@ import OweMe from "./components/OweMe";
 import PayRequest from "./components/PayRequest";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 
 function HomeScreen({navigation}){
   return(
