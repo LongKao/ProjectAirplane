@@ -1,8 +1,6 @@
 import React,{ useState } from "react";
 import {View, Text, StyleSheet, Button, Alert, SafeAreaView, Pressable,TextInput, TouchableOpacity} from 'react-native';
 
-
-
 const Additem = ({title, addItem}) => {
     
     const [text, setText] = useState('');
