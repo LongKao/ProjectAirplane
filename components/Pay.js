@@ -3,14 +3,17 @@ import {View, Text, StyleSheet, FlatList, Alert,Button} from 'react-native';
 import List from "./List";
 import uuid from 'react-native-uuid';
 import Additem from "./Additem";
-import Data from "../data/DataPay.json"
+import Data from "../data/DataPay.json"     //for sample data values
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Debt = () => {
 
     const [input, setInput] = useState([]);
 
-    const storage_Key = 'payData';
+    const storage_Key = 'payData';          //this is a file name which keeps data about people user owes to
+
+
+    //----------------------------------------2 functions below are used for reading and writing a data file
     const setData = async (value) => {
         try {
             const jsonValue = JSON.stringify(value)
@@ -34,22 +37,8 @@ const Debt = () => {
         }
         console.log('Data retrieved');
     }
-    const updateData = (value) =>{
-        try{
-            AsyncStorage.getItem(storage_Key)
-                .then(data=>{
-                    console.log(data);
-                    data = JSON.parse()
-                })
-        } catch (e) {
-        // saving error
-            console.log(e)
-        }
-        console.log('Data updated');
-    }
-    
 
-    let totalAmount = 0;
+    let totalAmount = 0.00;
 
     for(let item of input)totalAmount+=item.amount;
 
@@ -95,7 +84,6 @@ const Debt = () => {
         console.log("before setinput "+JSON.stringify(input));
         setData(input)
     };
-    const [count, setCount] = useState(0);
 
     useEffect(()=>{
         console.log("--------------------")
@@ -115,11 +103,6 @@ const Debt = () => {
                 deleteItem={deleteItem}/>
             )}
             />
-            <Button 
-                onPress={()=>
-                    console.log(input)  
-                } 
-                title = 'press to see array'/>
         </View>
     );
 };

@@ -1,25 +1,28 @@
 import React,{useState,useEffect} from "react";
 import {View, StyleSheet,Button,Text,TextInput} from 'react-native';
 import Header from "./components/Header";
-import Debt from "./components/Debt";
-import OweMe from "./components/OweMe";
+import Pay from "./components/Pay";
+import Receive from "./components/Receive";
 import PayRequest from "./components/PayRequest";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-function HomeScreen({navigation}){
+function HomeScreen({navigation,route}){
+  //const { name } = route.params;
   return(
     <View style={styles.container}>
       <Header />
-      <Debt />
-      <OweMe navigation={navigation}/>
+      <Pay />
+      <Receive 
+        navigation={navigation}
+        name/>
     </View>
   );
 } 
 
 
 
-function DetailsScreen({route}) {
+function DetailsScreen({navigation,route}) {
   const [name, setName] = useState('');
   const [amount, setAmount] = useState(0);
   const [reason, setReason] = useState('');
@@ -29,6 +32,7 @@ function DetailsScreen({route}) {
   const onChangeReason = textValue => setReason(textValue);
 
   const { email } = route.params;
+  //const { data } = route.params;
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -45,6 +49,7 @@ function DetailsScreen({route}) {
         onChangeText={onChangeReason}
       />
       <PayRequest
+        navigation={navigation}
         name={name}     
         amount={amount}
         reason={reason}
