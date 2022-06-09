@@ -36,6 +36,10 @@ function DetailsScreen({navigation,route}) {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        title="Go back"
+        onPress={() => navigation.navigate('Home')}
+      />
       <TextInput
         placeholder="Enter a name..."
         onChangeText={onChangeName}

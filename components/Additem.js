@@ -5,9 +5,11 @@ const Additem = ({title, addItem}) => {
     
     const [text, setText] = useState('');
     const [amount, setAmount] = useState(0);
+    const [reason, setReason] = useState('');
 
     const onChangeName = textValue => setText(textValue);
     const onChangeAmount = textValue =>setAmount(textValue);
+    const onChangeReason = textValue =>setReason(textValue); 
 
     return (
         <View style={styles.additemView}>
@@ -20,9 +22,13 @@ const Additem = ({title, addItem}) => {
                 placeholder="Amount..."
                 onChangeText={onChangeAmount}
             />
+            <TextInput
+                placeholder="Reason..."
+                onChangeText={onChangeReason}
+            />
             <TouchableOpacity 
                 style={styles.btn} 
-                onPress={() => addItem(text,parseInt(amount))}
+                onPress={() => addItem(text,parseInt(amount),reason)}
                 //onPress={console.log(text)}
                 >
                 <Text style={styles.btnText}>Add item</Text>

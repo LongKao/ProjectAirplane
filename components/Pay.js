@@ -42,12 +42,12 @@ const Debt = () => {
 
     for(let item of input)totalAmount+=item.amount;
 
-    const addItem = (text,amount) => {
-        if(text==='' || amount===0){
-            Alert.alert('Error', 'Please enter an item', {text: 'Ok'})
+    const addItem = (text,amount,reason) => {
+        if(text==='' || amount===0 || reason===''){
+            Alert.alert('Oopsie', 'Please enter full information', [{ text: "okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
         }
         else{
-            let content = {id: uuid.v4(), amount, text}
+            let content = {id: uuid.v4(), amount, text, reason}
             
             //console.log("before setinput "+input);
             input.push(content); //updates input = (input+content)

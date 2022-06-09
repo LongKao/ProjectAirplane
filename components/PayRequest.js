@@ -38,10 +38,14 @@ const PayRequest = (props) => {
 
   const onShare = async () => {
     try {
-      const result = await Share.share({
+      if(props.name==='' || props.amount===0 || props.reason===''){
+        //Alert.alert('Error', 'Please enter all entries', [{ text: "OK", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
+      }
+      else{
+        const result = await Share.share({
         message:
         'Hey '+props.name+'! Can you send me back $'+props.amount+' for '+props.reason+' to '+props.email,
-      });
+      });}
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
           // shared with activity type of result.activityType
@@ -49,44 +53,21 @@ const PayRequest = (props) => {
         } else {
           // shared
           console.log("Send the request pressed")
-          // console.log("props.data "+input);
-          // let amountt = props.amount;
-          // let namee = props.name;
-          // console.log("amount and name: "+amountt+" "+namee)
-          // let content = {id: uuid.v4(), amountt, namee}
-            
-          //   //console.log("before setinput "+input);
-          //   input.push(content); //updates input = (input+content)
-          //   //setInput(input);
-          //   console.log("input "+JSON.stringify(input))
-          //   setInput(prevItems => {
-          //       return [...prevItems];
-          //   });
-          //   //console.log("after setinput "+input);
-            
-          //   console.log("before adding setData "+JSON.stringify(input));
-            
-          //   setData(input);
- 
-          //   console.log("after adding setData "+JSON.stringify(input));
         }
       } else if (result.action === Share.dismissedAction) {
         // dismissed
         console.log("dismissed!");
       }
     } catch (error) {
-      alert(error.message);
+      Alert.alert('Uh oh', 'Please enter full information', [{ text: "Okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
     }
   };
   
-  const addItem = (text,amount) => {
+  const addItem = (text,amount,reason) => {
     console.log("text "+text)
-    if(text==='' || amount===0){
-        Alert.alert('Error', 'Please enter an item', {text: 'Ok'})
-    }
-    else{
+    
         amount = parseInt(amount)
-        let content = {id: uuid.v4(), amount, text}
+        let content = {id: uuid.v4(), amount, text, reason}
         
         input.push(content); //updates input = (input+content)
         //setInput(input);
@@ -99,9 +80,9 @@ const PayRequest = (props) => {
         console.log("before adding setData "+JSON.stringify(input));
         
         setData(input);
-        
+
         console.log("after adding setData "+JSON.stringify(input));
-    }
+    
   }
   
   useEffect(()=>{
@@ -112,7 +93,7 @@ const PayRequest = (props) => {
 
   return (
     <View>
-      <Pressable style={styles.payReq} onPress={()=>{onShare(); addItem(props.name,props.amount)}}>
+      <Pressable style={styles.payReq} onPress={()=>{onShare(); addItem(props.name,props.amount,props.reason)}}>
           <Text style={styles.text}>Send the request</Text>
       </Pressable>
     </View>

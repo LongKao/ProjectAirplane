@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {View, Text, StyleSheet,FlatList, TextInput,Button, Pressable,Share} from 'react-native';
+import {View, Text, StyleSheet,FlatList, TextInput, Pressable,Alert} from 'react-native';
 import List from "./List";
 import uuid from 'react-native-uuid';
 import Additem from "./Additem";
@@ -97,6 +97,7 @@ const Receive = ({navigation}) => {
             <Text style={styles.text}>Receive</Text>
             <Text style={styles.text}>${totalAmount}</Text>
             {/* <Additem addItem={addItem} */}
+            <Text>Name</Text>
             <FlatList 
                 data={input} 
                 renderItem={({item}) => (
@@ -108,7 +109,13 @@ const Receive = ({navigation}) => {
                 placeholder='Enter your email...'
                 onChangeText={onChangeEmail}
             />
-            <Pressable style={styles.payReq} onPress={() => navigation.navigate('Details',{email:email, params:input})}>
+            <Pressable style={styles.payReq} onPress={() => {
+                if(email === ''){
+                    Alert.alert('Darn', 'You forgot to enter your email', [{ text: "okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
+                }else{
+                    navigation.navigate('Details',{email:email, params:input})}
+                }
+                }>
                 <Text style={styles.textbtn}>Request payment</Text>
             </Pressable>
         </View>
