@@ -35,23 +35,31 @@ function DetailsScreen({navigation,route}) {
   //const { data } = route.params;
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
+    <View style={{flex:1, alignItems:'center',justifyContent: 'space-around'}}>
+      {/* <Button
         title="Go back"
         onPress={() => navigation.navigate('Home')}
-      />
+      /> */}
       <TextInput
-        placeholder="Enter a name..."
-        onChangeText={onChangeName}
-      />
-      <TextInput
-        placeholder="Enter amount..."
+        style={{
+          fontSize:80
+        }}
+        keyboardType="numeric"
+        placeholder="$0"
         onChangeText={onChangeAmount}
       />
-      <TextInput
-        placeholder="Enter a reason..."
-        onChangeText={onChangeReason}
-      />
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignSelf:'stretch'}}>
+        <TextInput
+          style={{fontSize:20}}
+          placeholder="Enter a name..."
+          onChangeText={onChangeName}
+        />
+        <TextInput
+          style={{fontSize:20}}
+          placeholder="Enter a reason..."
+          onChangeText={onChangeReason}
+        />
+      </View>
       <PayRequest
         navigation={navigation}
         name={name}     
@@ -68,9 +76,9 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode="none" initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="Details" component={DetailsScreen} options={{headerStyle:{backgroundColor:'#F47C7C'}, headerTintColor:'white'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

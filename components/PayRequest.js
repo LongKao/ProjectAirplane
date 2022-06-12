@@ -10,7 +10,8 @@ const PayRequest = (props) => {
   const storage_Key = 'receiveData';          //this is a file name which keeps data about people user owes to
   
 
-  //----------------------------------------2 functions below are used for reading and writing a data file
+  //----------------------------------------
+  //2 functions below are used for reading and writing a data file
   const setData = async (value) => {
     try {
       const jsonValue = JSON.stringify(value)
@@ -36,53 +37,37 @@ const PayRequest = (props) => {
     console.log('Data retrieved');
   }
 
+  // this function checks if the input is valid. If successfull saves message that will be shared and executes addItem function.
   const onShare = async () => {
     try {
-      if(props.name==='' || props.amount===0 || props.reason===''){
-        //Alert.alert('Error', 'Please enter all entries', [{ text: "OK", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
+      if(props.name==='' || props.amount===0 || isNaN(props.amount)==true || props.reason===''){
+        Alert.alert('Uh oh', 'Please enter correct information', [{ text: "okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
       }
       else{
         const result = await Share.share({
-        message:
-        'Hey '+props.name+'! Can you send me back $'+props.amount+' for '+props.reason+' to '+props.email,
-      });}
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-          console.log(result.activityType)
-        } else {
-          // shared
-          console.log("Send the request pressed")
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-        console.log("dismissed!");
+          message:
+          'Hey '+props.name+'! Can you send me back $'+props.amount+' for '+props.reason+' to '+props.email,
+        });
+        addItem(props.name,props.amount,props.reason)
+        props.navigation.navigate('Home');
       }
     } catch (error) {
-      Alert.alert('Uh oh', 'Please enter full information', [{ text: "Okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
+      console.log(e)
     }
   };
   
+  //takes the input and updates local "input" variable and data file
   const addItem = (text,amount,reason) => {
-    console.log("text "+text)
-    
-        amount = parseInt(amount)
-        let content = {id: uuid.v4(), amount, text, reason}
+      amount = parseInt(amount)
+      let content = {id: uuid.v4(), amount, text, reason}
         
-        input.push(content); //updates input = (input+content)
-        //setInput(input);
-        console.log("input "+JSON.stringify(input))
-        setInput(prevItems => {
-            return [...prevItems];
-        });
-        //console.log("after setinput "+input);
-        
-        console.log("before adding setData "+JSON.stringify(input));
-        
-        setData(input);
+      input.push(content); //updates input = (input+content)
 
-        console.log("after adding setData "+JSON.stringify(input));
-    
+      console.log("input "+JSON.stringify(input))
+      setInput(prevItems => {
+          return [...prevItems];
+      });
+      setData(input);
   }
   
   useEffect(()=>{
@@ -92,8 +77,8 @@ const PayRequest = (props) => {
   },[])
 
   return (
-    <View>
-      <Pressable style={styles.payReq} onPress={()=>{onShare(); addItem(props.name,props.amount,props.reason)}}>
+    <View style={styles.view}>
+      <Pressable style={styles.payReq} onPress={()=>{onShare()}}>
           <Text style={styles.text}>Send the request</Text>
       </Pressable>
     </View>
@@ -101,6 +86,9 @@ const PayRequest = (props) => {
 }
 
 const styles = StyleSheet.create({
+  view:{
+    
+  },
   touchEffect:{
     backgroundColor:'#f8f8f8',
     borderColor:'#eee'
@@ -110,7 +98,7 @@ const styles = StyleSheet.create({
     //justifyContent:'flex-end',
     //paddingBottom:30,
     alignItems:'center',
-    backgroundColor:'#73b5d3',
+    backgroundColor:'#F47C7C',
     paddingVertical: 12,
     marginHorizontal: 100,
     borderRadius:100/2,
@@ -119,8 +107,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   text: {
-    //color:'#fff',
+    color:'#fff',
     fontSize:20,
+    paddingHorizontal:10
   }
 })
 

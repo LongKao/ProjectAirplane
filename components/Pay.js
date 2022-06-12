@@ -43,8 +43,8 @@ const Debt = () => {
     for(let item of input)totalAmount+=item.amount;
 
     const addItem = (text,amount,reason) => {
-        if(text==='' || amount===0 || reason===''){
-            Alert.alert('Oopsie', 'Please enter full information', [{ text: "okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
+        if(text==='' || amount===0 || isNaN(amount)==true || reason===''){
+            Alert.alert('Oopsie', 'Please enter correct information', [{ text: "okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
         }
         else{
             let content = {id: uuid.v4(), amount, text, reason}
@@ -58,11 +58,11 @@ const Debt = () => {
             });
             //console.log("after setinput "+input);
             
-            console.log("before adding setData "+JSON.stringify(input));
+            //console.log("before adding setData "+JSON.stringify(input));
             
             setData(input);
  
-            console.log("after adding setData "+JSON.stringify(input));
+            //console.log("after adding setData "+JSON.stringify(input));
         }
     }
 
@@ -72,16 +72,16 @@ const Debt = () => {
         let position = input.findIndex(function(object){
             return object.id === id
         })
-        console.log("id " + input.findIndex(function(object){
-            return object.id === id
-        }));
+        // console.log("id " + input.findIndex(function(object){
+        //     return object.id === id
+        // }));
         input.splice(position,1);   //removes obj at "position" in a save file
        
         setInput(prevItems => {     //removes same obj in the app's ui
             return prevItems.filter(item => item.id != id);
         });
 
-        console.log("before setinput "+JSON.stringify(input));
+        //console.log("before setinput "+JSON.stringify(input));
         setData(input)
     };
 
