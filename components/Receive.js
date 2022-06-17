@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {View, Text, StyleSheet,FlatList, TextInput, Pressable,Alert} from 'react-native';
 import List from "./List";
-import uuid from 'react-native-uuid';
-import Additem from "./Additem";
 import Data from "../data/DataReceive.json"     //for sample data values
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -79,7 +77,7 @@ const Receive = ({navigation}) => {
         console.log("--------------------")
 
         AsyncStorage.getItem(email_key).then((value)=>{setEmail(value)}); 
-        console.log("initialing email from history... "+JSON.stringify(email));
+        console.log("initiating email from history... "+JSON.stringify(email));
 
         const toggle = setInterval(() => {
             getData()
@@ -92,7 +90,11 @@ const Receive = ({navigation}) => {
             <Text style={styles.text}>Receive</Text>
             <Text style={styles.text}>${totalAmount}</Text>
             {/* <Additem addItem={addItem} */}
-            <Text>Name</Text>
+            <View style={styles.catName}>
+                <Text>Name</Text>
+                <Text>Amount</Text>
+                <Text>Reason</Text>
+            </View>
             <FlatList 
                 data={input} 
                 renderItem={({item}) => (
@@ -122,7 +124,8 @@ const Receive = ({navigation}) => {
 
 const styles = StyleSheet.create({
   Receive: {
-    flex:1
+    flex:1,
+    padding:10
   },
   payReq: {
     //flex:1,
@@ -133,7 +136,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginHorizontal: 100,
     borderRadius:100/2,
-    //elevation: 3,
     flexDirection:'column',
     justifyContent: 'space-between'
   },
@@ -148,7 +150,12 @@ const styles = StyleSheet.create({
   },
   emailInput:{
     alignSelf:'center',
-    fontSize:20
+    fontSize:20,
+  },
+  catName:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginRight:120
   }
 })
 

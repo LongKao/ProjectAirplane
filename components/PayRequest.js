@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import {View, Text, StyleSheet, Share, Alert, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Share, Alert, Pressable, Linking} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
 const PayRequest = (props) => {
@@ -28,7 +28,7 @@ const PayRequest = (props) => {
       const value = await AsyncStorage.getItem(storage_Key);
       if (value !== null) {
         setInput(JSON.parse(value));
-        console.log("value "+value)
+        //console.log("value "+value)
       }
     } catch(e) {
       console.log(e)
@@ -46,7 +46,7 @@ const PayRequest = (props) => {
       else{
         const result = await Share.share({
           message:
-          'Hey '+props.name+'! Can you send me back $'+props.amount+' for '+props.reason+' to '+props.email,
+          'Hey '+props.name+'! Can you send me back $'+props.amount+' for '+props.reason+' to '+props.email+'via https://www.td.com',
         });
         addItem(props.name,props.amount,props.reason)
         props.navigation.navigate('Home');
@@ -58,12 +58,12 @@ const PayRequest = (props) => {
   
   //takes the input and updates local "input" variable and data file
   const addItem = (text,amount,reason) => {
-      amount = parseInt(amount)
+      amount = parseFloat(parseFloat(amount).toFixed(2))
       let content = {id: uuid.v4(), amount, text, reason}
         
       input.push(content); //updates input = (input+content)
 
-      console.log("input "+JSON.stringify(input))
+      //console.log("input "+JSON.stringify(input))
       setInput(prevItems => {
           return [...prevItems];
       });
@@ -72,7 +72,7 @@ const PayRequest = (props) => {
   
   useEffect(()=>{
     console.log("--------------------")
-    //setData(Data);                    //uncomment to set sample data
+    //setData(Data);                    //uncomment to set sample data(for testing delete)
     getData()
   },[])
 

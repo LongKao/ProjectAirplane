@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, FlatList, Alert,Button} from 'react-native';
 import List from "./List";
 import uuid from 'react-native-uuid';
 import Additem from "./Additem";
-import Data from "../data/DataPay.json"     //for sample data values
+import Data from "../data/DataPay.json"     //for sample data values(look useEffect function)
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Debt = () => {
@@ -109,7 +109,8 @@ const Debt = () => {
 
 const styles = StyleSheet.create({
   Debt: {
-    flex:1
+    flex:1,
+    padding:10
   },
   text: {
     //color: '#fff',

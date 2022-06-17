@@ -19,14 +19,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.longkao.ProjectAirplane"
+      "bundleIdentifier": "com.longkao.ProjectAirplaneV2"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.longkao.ProjectAirplane"
+      "package": "com.longkao.ProjectAirplaneV2"
     },
     "web": {
       "favicon": "./assets/favicon.png"

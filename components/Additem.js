@@ -36,7 +36,7 @@ const Additem = ({title, addItem}) => {
             <TouchableOpacity 
                 style={styles.btn} 
                 onPress={() => {
-                    addItem(text,parseInt(amount),reason);
+                    addItem(text,parseFloat(parseFloat(amount).toFixed(2)),reason);
                     setText('');
                     setAmount(0);
                     setReason('');

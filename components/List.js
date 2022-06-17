@@ -1,5 +1,6 @@
 import React from "react";
 import {View, Text, StyleSheet, TouchableOpacity,Alert} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const List = ({item, deleteItem}) => {
   return (
@@ -8,7 +9,13 @@ const List = ({item, deleteItem}) => {
             <Text style={{width:100}}>{item.text}</Text>
             <Text style={{width:100}}>${item.amount}</Text>
             <Text style={{width:100}}>{item.reason}</Text>
-            <Text style={styles.deletebtn} onPress={() => deleteItem(item.id)}>delete</Text>
+            <Icon.Button
+                name="close"
+                color="red"
+                backgroundColor="#f8f8f8"
+                
+                onPress={() => deleteItem(item.id)}
+            ></Icon.Button>
         </View>
     </TouchableOpacity>
   );
@@ -16,7 +23,7 @@ const List = ({item, deleteItem}) => {
 
 const styles = StyleSheet.create({
     listItem:{
-        padding:15,
+        padding:10,
         backgroundColor:'#f8f8f8',
         borderWidth:1,
         borderColor:'#eee'
@@ -25,8 +32,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems:'center'
-    },
-    deletebtn:{
     }
 });
 
