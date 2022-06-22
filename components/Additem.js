@@ -1,3 +1,6 @@
+//this component is used in "Pay" component. 
+//Includes input forms for name, amount and reason and add button
+
 import React,{ useState } from "react";
 import {View, Text, StyleSheet, Button, Alert, SafeAreaView, Pressable,TextInput, TouchableOpacity} from 'react-native';
 
@@ -26,11 +29,13 @@ const Additem = ({title, addItem}) => {
                 ref={amountRef}
                 keyboardType="numeric"
                 placeholder="Amount..."
+                style={styles.input}
                 onChangeText={onChangeAmount}
             />
             <TextInput
                 ref={reasonRef}
                 placeholder="Reason..."
+                style={styles.input}
                 onChangeText={onChangeReason}
             />
             <TouchableOpacity 
@@ -56,6 +61,9 @@ const styles = StyleSheet.create({
     additemView:{
         flexDirection: 'row',
         justifyContent: 'space-between',
+    },
+    input:{
+        width:"25%"
     }
 })
 

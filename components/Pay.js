@@ -29,7 +29,6 @@ const Debt = () => {
             const value = await AsyncStorage.getItem(storage_Key);
             if (value !== null) {
                 setInput(JSON.parse(value));
-                console.log(value)
             }
         } catch(e) {
             console.log(e)
@@ -109,8 +108,9 @@ const Debt = () => {
 
 const styles = StyleSheet.create({
   Debt: {
-    flex:1,
-    padding:10
+    //flex:1,
+    padding:10,
+    height:"39%"
   },
   text: {
     //color: '#fff',

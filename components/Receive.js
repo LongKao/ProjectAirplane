@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {View, Text, StyleSheet,FlatList, TextInput, Pressable,Alert} from 'react-native';
+import {View, Text, StyleSheet,FlatList, TextInput, TouchableOpacity,Alert,KeyboardAvoidingView} from 'react-native';
 import List from "./List";
 import Data from "../data/DataReceive.json"     //for sample data values
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,11 +12,6 @@ const Receive = ({navigation}) => {
     const email_key = 'email_key';
 
     let totalAmount = 0;
-    //const { name } = route.params.name;
-    // const [items, setItems] = useState([
-    //     {id: uuid.v4(),amount:15, text:'Frank Roosvelt'},
-    //     {id: uuid.v4(),amount:30, text:'Paul'}
-    // ]);    
 
     //----------------------------------------2 functions below are used for reading and writing a data file
     const setData = async (value) => {
@@ -103,21 +98,26 @@ const Receive = ({navigation}) => {
                     deleteItem={deleteItem}/>
             )}
             />
-            <TextInput
-                style={styles.emailInput}
-                placeholder='Enter your email...'
-                value={email}
-                onChangeText={onChangeEmail}
-            />
-            <Pressable style={styles.payReq} onPress={() => {
-                if(email === null || email === ''){
-                    Alert.alert('Darn', 'You forgot to enter your email', [{ text: "okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
-                }else{
-                    navigation.navigate('Details',{email:email, params:input})}
-                }
-                }>
-                <Text style={styles.textbtn}>Request payment</Text>
-            </Pressable>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={styles.container}
+            >
+                <TextInput
+                    style={styles.emailInput}
+                    placeholder='Enter your email...'
+                    value={email}
+                    onChangeText={onChangeEmail}
+                />
+                <TouchableOpacity style={styles.payReq} onPress={() => {
+                    if(email === null || email === ''){
+                        Alert.alert('Darn', 'You forgot to enter your email', [{ text: "okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
+                    }else{
+                        navigation.navigate('Details',{email:email, params:input})}
+                    }
+                    }>
+                    <Text style={styles.textbtn}>Request payment</Text>
+                </TouchableOpacity>
+            </KeyboardAvoidingView>
         </View>
     )
 }
@@ -130,11 +130,11 @@ const styles = StyleSheet.create({
   payReq: {
     //flex:1,
     //justifyContent:'flex-end',
-    //paddingBottom:30,
+    marginBottom:10,
     alignItems:'center',
     backgroundColor:'#F47C7C',
     paddingVertical: 12,
-    marginHorizontal: 100,
+    marginHorizontal: 80,
     borderRadius:100/2,
     flexDirection:'column',
     justifyContent: 'space-between'
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
   emailInput:{
     alignSelf:'center',
     fontSize:20,
+    paddingTop:10
   },
   catName:{
     flexDirection: 'row',

@@ -23,7 +23,7 @@ const List = ({item, deleteItem}) => {
 
 const styles = StyleSheet.create({
     listItem:{
-        padding:10,
+        padding:8,
         backgroundColor:'#f8f8f8',
         borderWidth:1,
         borderColor:'#eee'

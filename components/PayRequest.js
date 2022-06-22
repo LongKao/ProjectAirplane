@@ -1,7 +1,9 @@
 import React, { useState,useEffect } from "react";
-import {View, Text, StyleSheet, Share, Alert, Pressable, Linking} from 'react-native';
+import {View, Text, StyleSheet, Share, Alert, TouchableOpacity, Linking} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 const PayRequest = (props) => {
 
   const [input, setInput] = useState([]);
@@ -46,7 +48,7 @@ const PayRequest = (props) => {
       else{
         const result = await Share.share({
           message:
-          'Hey '+props.name+'! Can you send me back $'+props.amount+' for '+props.reason+' to '+props.email+'via https://www.td.com',
+          'Hey '+props.name+'! Can you send me back $'+props.amount+' for '+props.reason+' to '+props.email,
         });
         addItem(props.name,props.amount,props.reason)
         props.navigation.navigate('Home');
@@ -78,9 +80,10 @@ const PayRequest = (props) => {
 
   return (
     <View style={styles.view}>
-      <Pressable style={styles.payReq} onPress={()=>{onShare()}}>
+      <TouchableOpacity style={styles.payReq} onPress={()=>{onShare()}}>
           <Text style={styles.text}>Send the request</Text>
-      </Pressable>
+          <Icon name="paper-plane" color="#fff" />
+      </TouchableOpacity>
     </View>
   )
 }
@@ -100,10 +103,9 @@ const styles = StyleSheet.create({
     alignItems:'center',
     backgroundColor:'#F47C7C',
     paddingVertical: 12,
-    marginHorizontal: 100,
+    paddingHorizontal:'10%',
     borderRadius:100/2,
-    //elevation: 3,
-    flexDirection:'column',
+    flexDirection:'row',
     justifyContent: 'space-between'
   },
   text: {
