@@ -1,9 +1,10 @@
 import React,{useState,useEffect} from "react";
-import {View, StyleSheet,Button,Text,Alert,TextInput,KeyboardAvoidingView,TouchableOpacity} from 'react-native';
+import {View, StyleSheet,Button,Text,Alert,TextInput,KeyboardAvoidingView,TouchableOpacity, Pressable} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from "../components/Header";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function IntroScreen({navigation}){
 
@@ -31,44 +32,38 @@ function IntroScreen({navigation}){
         flex:1
     }}>
         <Header/>
-        <Text style={styles.introText}>Welcome to reFun!</Text>
+        <Pressable style={styles.homeBtn}>
+            <Icon.Button
+                name="home"
+                color="#000000"
+                backgroundColor="transparent"
+                size={30}
+                onPress={()=>navigation.navigate('Home')}
+                >
+            </Icon.Button>
+        </Pressable>
         <View style={styles.introView}>
             <View>
             <Text style={{
                 paddingHorizontal:'10%',
                 alignSelf:'center',
-                marginBottom:20}}>Please choose if you would like to proceed to summary or request payment:</Text>
+                marginBottom:20}}>Please choose if you would like to proceed to send payment or request payment:</Text>
                 <TouchableOpacity
                     style={styles.introBtn}
-                    onPress={()=>navigation.navigate('Home')}
+                    onPress={()=>navigation.navigate('PayDetails')}
                 >
-                    <Text style={styles.textBtn}>Summary</Text>
+                    <Text style={styles.textBtn}>Send money</Text>
                 </TouchableOpacity>
             </View>
-            <Text style={{alignSelf:'center', fontSize:20}}>or</Text>
+            {/* <Text style={{alignSelf:'center', fontSize:20}}>or</Text> */}
             <View>
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    style={styles.container}
-                >
                 <TouchableOpacity style={styles.introBtn} 
                     //title="Press here to request payment"
-                    onPress={()=>{
-                        if(email === null || email === ''){
-                            Alert.alert('Darn', 'You forgot to enter your email', [{ text: "okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
-                        }else{
-                            navigation.navigate('Details',{email:email, params:input})}
-                        }}
-                >
-                    <Text style={styles.textBtn}>Request payment</Text>
+                    onPress={()=>{navigation.navigate('ReceiveDetails',{email:email, params:input})}}
+                    >
+                    <Text style={styles.textBtn}>Request money</Text>
                 </TouchableOpacity>
-                <TextInput
-                    style={styles.emailInput}
-                    placeholder='Enter your email...'
-                    value={email}
-                    onChangeText={onChangeEmail}
-                />
-                </KeyboardAvoidingView>
+                
             </View>
         </View>
     </View>
@@ -80,11 +75,6 @@ const styles = StyleSheet.create({
         //setting flex:1 will make it disappear, so don't do it
         flex:1,
         justifyContent:'space-evenly'
-    },
-    emailInput:{
-        alignSelf:'center',
-        fontSize:20,
-        paddingTop:10
     },
     introText:{
         fontFamily:'',
@@ -99,7 +89,7 @@ const styles = StyleSheet.create({
         marginBottom:10,
         alignItems:'center',
         backgroundColor:'#F47C7C',
-        paddingVertical: '5%',
+        paddingVertical: '30%',
         marginHorizontal: '10%',
         borderRadius:100/2,
         flexDirection:'column',
@@ -108,6 +98,12 @@ const styles = StyleSheet.create({
     textBtn:{
         color:'#fff',
         fontSize:20,
+    },
+    homeBtn:{
+        backgroundColor:"transparent",
+        flexDirection:'row',
+        alignItems:'center',
+        //paddingLeft:10
     }
 })
 

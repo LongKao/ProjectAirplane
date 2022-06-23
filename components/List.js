@@ -13,7 +13,6 @@ const List = ({item, deleteItem}) => {
                 name="close"
                 color="red"
                 backgroundColor="#f8f8f8"
-                
                 onPress={() => deleteItem(item.id)}
             ></Icon.Button>
         </View>

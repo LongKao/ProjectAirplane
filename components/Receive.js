@@ -112,7 +112,7 @@ const Receive = ({navigation}) => {
                     if(email === null || email === ''){
                         Alert.alert('Darn', 'You forgot to enter your email', [{ text: "okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
                     }else{
-                        navigation.navigate('Details',{email:email, params:input})}
+                        navigation.navigate('ReceiveDetails',{email:email, params:input})}
                     }
                     }>
                     <Text style={styles.textbtn}>Request payment</Text>
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   emailInput:{
     alignSelf:'center',
     fontSize:20,
-    paddingTop:10
+    paddingBottom:10
   },
   catName:{
     flexDirection: 'row',

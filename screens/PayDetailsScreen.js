@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from "../components/Header";
 import PayRequest from "../components/PayRequest";
 
-function DetailsScreen({navigation,route}) {
+function PayDetailsScreen({navigation,route}) {
     const [name, setName] = useState('');
     const [amount, setAmount] = useState(0);
     const [reason, setReason] = useState('');
@@ -15,7 +15,7 @@ function DetailsScreen({navigation,route}) {
     const onChangeAmount = textValue => setAmount(textValue);
     const onChangeReason = textValue => setReason(textValue);
   
-    const { email } = route.params;
+    //const { email } = route.params;
     //const { data } = route.params;
   
     return (
@@ -49,7 +49,7 @@ function DetailsScreen({navigation,route}) {
           name={name}     
           amount={amount}
           reason={reason}
-          email={email}
+          //email={email}
         />
       </View>
     );
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
   
 })
 
-export default DetailsScreen
+export default PayDetailsScreen
