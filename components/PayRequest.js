@@ -62,7 +62,15 @@ const PayRequest = (props) => {
 
   return (
     <View style={styles.view}>
-      <TouchableOpacity style={styles.payReq} onPress={()=>{addItem(props.name,props.amount,props.reason),props.navigation.navigate('Home');}}>
+      <TouchableOpacity style={styles.payReq} onPress={()=>{
+        if(props.name==='' || props.amount===0 || isNaN(props.amount)==true || props.reason===''){
+          Alert.alert('Uh oh', 'Please enter correct information', [{ text: "okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
+        }
+        else{
+          addItem(props.name,props.amount,props.reason),
+          props.navigation.navigate('Home');
+        }
+      }}>
           <Text style={styles.text}>Send money</Text>
           <Icon name="paper-plane" color="#fff" />
       </TouchableOpacity>
