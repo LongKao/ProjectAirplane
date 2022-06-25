@@ -19,7 +19,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.longkao.ProjectAirplaneV2"
+      "bundleIdentifier": "com.longkao.ProjectAirplaneV2",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
