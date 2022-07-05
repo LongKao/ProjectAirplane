@@ -12,7 +12,9 @@ function HomeScreen({navigation,route}){
     return(
       <View style={styles.container}>
         <Header />
-        <Pay />
+        <Pay 
+          navigation={navigation}
+        />
         <Receive 
           navigation={navigation}
           name/>

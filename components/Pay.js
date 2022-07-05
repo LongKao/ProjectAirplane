@@ -1,12 +1,12 @@
 import React, { useState,useEffect } from "react";
-import {View, Text, StyleSheet, FlatList, Alert,Button} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Alert,TouchableOpacity} from 'react-native';
 import List from "./List";
 import uuid from 'react-native-uuid';
 import Additem from "./Additem";
 import Data from "../data/DataPay.json"     //for sample data values(look useEffect function)
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Debt = () => {
+const Debt = ({navigation}) => {
 
     const [input, setInput] = useState([]);
 
@@ -34,7 +34,7 @@ const Debt = () => {
             console.log(e)
           // error reading value
         }
-        console.log('Data retrieved');
+        //console.log('Data retrieved');
     }
 
     let totalAmount = 0.00;
@@ -87,14 +87,22 @@ const Debt = () => {
     useEffect(()=>{
         console.log("--------------------")
         //setData(Data);                    //uncomment to set sample data
-        getData()
+        const toggle = setInterval(() => {
+            getData()
+        }, 100);
+        return () => clearInterval(toggle);
     },[])
 
     return (
         <View style={styles.Debt}>
             <Text style={styles.text}>Pay</Text>
             <Text style={styles.text}>${totalAmount}</Text>
-            <Additem addItem={addItem}/>
+            {/* <Additem addItem={addItem}/> */}
+            <View style={styles.catName}>
+                <Text>Name</Text>
+                <Text>Amount</Text>
+                <Text>Reason</Text>
+            </View>
             <FlatList 
                 data={input} 
                 renderItem={({item}) => (
@@ -102,13 +110,19 @@ const Debt = () => {
                 deleteItem={deleteItem}/>
             )}
             />
+            <TouchableOpacity
+                style={styles.payReq}
+                onPress={()=>navigation.navigate('PayDetails')}
+            >
+                <Text style={styles.textBtn}>Send money</Text>
+            </TouchableOpacity>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
   Debt: {
-    //flex:1,
+    flex:1,
     padding:10,
     height:"39%"
   },
@@ -116,7 +130,26 @@ const styles = StyleSheet.create({
     //color: '#fff',
     fontSize: 23,
     textAlign:'center'
-  }
+  },
+  payReq:{
+    //marginBottom:10,
+    alignItems:'center',
+    backgroundColor:'#F47C7C',
+    paddingVertical: 12,
+    marginHorizontal: 80,
+    borderRadius:100/2,
+    flexDirection:'column',
+    justifyContent: 'space-between'
+    },
+    textBtn:{
+        color:'#fff',
+        fontSize:20,
+    },
+    catName:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginRight:120
+      }
 })
 
 export default Debt

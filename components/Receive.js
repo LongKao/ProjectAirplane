@@ -108,7 +108,7 @@ const Receive = ({navigation}) => {
                     value={email}
                     onChangeText={onChangeEmail}
                 />
-                <TouchableOpacity style={styles.payReq} onPress={() => {
+                <TouchableOpacity style={styles.receiveReq} onPress={() => {
                     if(email === null || email === ''){
                         Alert.alert('Darn', 'You forgot to enter your email', [{ text: "okie dokie", onPress: () => console.log("OK Pressed") }],{ cancelable: true });
                     }else{
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     flex:1,
     padding:10
   },
-  payReq: {
+  receiveReq: {
     //flex:1,
     //justifyContent:'flex-end',
     marginBottom:10,
