@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ProjectAirplane",
-    "slug": "ProjectAirplane",
+    "name": "reFun",
+    "slug": "reFun",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.longkao.ProjectAirplaneV2",
+      "bundleIdentifier": "com.longkao.reFun",
       "buildNumber": "3"
     },
     "android": {
@@ -27,7 +27,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.longkao.ProjectAirplaneV2"
+      "package": "com.longkao.reFun"
     },
     "web": {
       "favicon": "./assets/favicon.png"

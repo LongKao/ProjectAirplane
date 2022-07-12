@@ -1,28 +1,61 @@
-// This is a public sample test API key.
-// Don’t submit any personally identifiable information in requests made with this key.
-// Sign in to see your own test API key embedded in code samples.
-const stripe = require('stripe')('sk_test_51LG9AFDOzhB03cxB6YytDk1ARWI4J8gau4PhNslHaSXmg2jSddUZNOlMRQn0ffVO5hJYIpp74eqePch9babUcS7R00s60uQX7r');
+require("dotenv").config({path: '.env'});
 const express = require('express');
+const bodyParser = require("body-parser")
+const session = require("express-session");
+const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 const app = express();
-app.use(express.static('public'));
+const PORT = 3000;
 
-const YOUR_DOMAIN = 'http://localhost:4242';
+app.use(
+  // FOR DEMO PURPOSES ONLY
+  // Use an actual secret key in production
+  session({ secret: "bosco", saveUninitialized: true, resave: true })
+);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
 
-app.post('/create-checkout-session', async (req, res) => {
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        price: '{{PRICE_ID}}',
-        quantity: 1,
-      },
-    ],
-    mode: 'payment',
-    success_url: `${YOUR_DOMAIN}?success=true`,
-    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
-  });
-
-  res.redirect(303, session.url);
+const config = new Configuration({
+  basePath: PlaidEnvironments[process.env.PLAID_ENV],
+  baseOptions: {
+    headers: {
+      "PLAID-CLIENT-ID": process.env.PLAID_CLIENT_ID,
+      "PLAID-SECRET": process.env.PLAID_SECRET,
+      "Plaid-Version": "2020-09-14",
+    },
+  },
 });
 
-app.listen(4242, () => console.log('Running on port 4242'));
+const client = new PlaidApi(config);
+
+app.get("/api/create_link_token", async (req, res, next) => {
+  const tokenResponse = await client.linkTokenCreate({
+    user: { client_user_id: req.sessionID },
+    client_name: "Plaid's Tiny Quickstart",
+    language: "en",
+    products: ["auth"],
+    country_codes: ["CA"],
+    redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
+  });
+  res.json(tokenResponse.data);
+});
+
+app.post("/api/exchange_public_token", async (req, res, next) => {
+  const exchangeResponse = await client.itemPublicTokenExchange({
+    public_token: req.body.public_token,
+  });
+
+  // FOR DEMO PURPOSES ONLY
+  // Store access_token in DB instead of session storage
+  req.session.access_token = exchangeResponse.data.access_token;
+  res.json(true);
+});
+
+app.get("/api/balance", async (req, res, next) => {
+  const access_token = req.session.access_token;
+  const balanceResponse = await client.accountsBalanceGet({ access_token });
+  res.json({
+    Balance: balanceResponse.data,
+  });
+});
+
+app.listen(process.env.PORT || 8080);

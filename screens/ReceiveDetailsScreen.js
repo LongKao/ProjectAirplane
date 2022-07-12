@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import {View, StyleSheet,Button,Text,Alert,TextInput} from 'react-native';
+import {View, StyleSheet,KeyboardAvoidingView,TextInput} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -35,7 +35,9 @@ function ReceiveDetailsScreen({navigation,route}) {
     },[])
   
     return (
-      <View style={{flex:1, alignItems:'center',justifyContent: 'space-around'}}>
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{flex:1, alignItems:'center',justifyContent: 'space-around'}}>
         {/* <Button
           title="Go back"
           onPress={() => navigation.navigate('Home')}
@@ -73,7 +75,7 @@ function ReceiveDetailsScreen({navigation,route}) {
           reason={reason}
           email={email}
         />
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 

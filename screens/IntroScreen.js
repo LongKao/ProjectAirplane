@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect, useCallback} from "react";
 import {View, StyleSheet,Button,Text,Alert,TextInput,KeyboardAvoidingView,TouchableOpacity, Pressable} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -7,7 +7,6 @@ import Header from "../components/Header";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 function IntroScreen({navigation}){
-
     const [input, setInput] = useState([]);
 
     const email_key = 'email_key';
@@ -20,6 +19,20 @@ function IntroScreen({navigation}){
         AsyncStorage.getItem(email_key).then((value)=>{console.log(value)}); 
     }
 
+    // function twilio(){
+    //     const accountSid = AC94f17e5201e4dfc7b2c999c34ef77126;
+    //     const authToken = ea0f37ec423c2f871482ce5a05b9e19d;
+    //     const client = require('twilio')(accountSid, authToken);
+
+    //     client.messages
+    //     .create({
+    //         body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+    //         from: '+13349464257',
+    //         to: '+13435488536'
+    //     })
+    //     .then(message => console.log(message.sid));
+    // }
+
     useEffect(()=>{
         console.log("--------------------")
 
@@ -31,7 +44,9 @@ function IntroScreen({navigation}){
     <View style={{
         flex:1
     }}>
-        <Header/>
+        <Header
+            title={"reFun"}    
+        />
         <Pressable style={styles.homeBtn}>
             <Icon.Button
                 name="home"
@@ -50,12 +65,11 @@ function IntroScreen({navigation}){
                 marginBottom:20}}>Please choose if you would like to proceed to send payment or request payment:</Text>
                 <TouchableOpacity
                     style={styles.introBtn}
-                    onPress={()=>navigation.navigate('PayDetails')}
+                    onPress={()=>{navigation.navigate('PayDetails')}}
                 >
                     <Text style={styles.textBtn}>Send money</Text>
                 </TouchableOpacity>
             </View>
-            {/* <Text style={{alignSelf:'center', fontSize:20}}>or</Text> */}
             <View>
                 <TouchableOpacity style={styles.introBtn} 
                     //title="Press here to request payment"
@@ -89,7 +103,7 @@ const styles = StyleSheet.create({
         marginBottom:10,
         alignItems:'center',
         backgroundColor:'#F47C7C',
-        paddingVertical: '30%',
+        paddingVertical: '20%',
         marginHorizontal: '10%',
         borderRadius:100/2,
         flexDirection:'column',
